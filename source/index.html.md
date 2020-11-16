@@ -1,241 +1,187 @@
 ---
-title: API Reference
+title: comvalue v1.0.0
+language_tabs:
+  - "'ruby": Ruby'
+  - "'python": Python'
+language_clients:
+  - "'ruby": ""
+  - "'python": ""
+toc_footers: []
+includes: []
+search: false
+highlight_theme: darkula
+headingLevel: 2
+generator: widdershins v4.0.1
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
-
-includes:
-  - errors
-
-search: true
-
-code_clipboard: true
 ---
 
-# Introduction
+<h1 id="comvalue">comvalue v1.0.0</h1>
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+This is a sample server
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Base URLs:
 
-# Authentication
+* <a href="http://api.comvalue.com/v2">http://api.comvalue.com/v2</a>
 
-> To authorize, use this code:
+<a href="http://comvalue.com/terms/">Terms of service</a>
+Email: <a href="mailto:apiteam@comvalue.com">Support</a> 
+License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>
 
-```ruby
-require 'kittn'
+<h1 id="comvalue-orders">orders</h1>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+Access to orders
 
-```python
-import kittn
+## summary: get all orders
 
-api = kittn.authorize('meowmeowmeow')
-```
+<a id="opIdgetOrders"></a>
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+> Code samples
 
-```javascript
-const kittn = require('kittn');
+`GET /order/all`
 
-let api = kittn.authorize('meowmeowmeow');
-```
+Desc: get all Orders 
 
-> Make sure to replace `meowmeowmeow` with your API key.
+<h3 id="summary:-get-all-orders-parameters">Parameters</h3>
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|loginToken|header|string|true|loginToken|
+|lastOrderId|query|number|false|none|
+|startOrderId|query|number|false|all orderID <=|
+|status|query|array[integer]|false|status filter like [60,61,62] for canceled orders|
+|limit|query|number|false|none|
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+> Example responses
 
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> 200 Response
 
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "orders": [
+      {
+        "orderId": 0,
+        "pharmacyId": 0,
+        "pharmacyCustomerId": "string",
+        "status": 0,
+        "timeStamp": "string",
+        "readByPharmacy": 0
+      }
+    ]
   }
 ]
 ```
 
-This endpoint retrieves all kittens.
+<h3 id="summary:-get-all-orders-responses">Responses</h3>
 
-### HTTP Request
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|successful operation|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid status value|None|
 
-`GET http://example.com/api/kittens`
+<h3 id="summary:-get-all-orders-responseschema">Response Schema</h3>
 
-### Query Parameters
+Status Code **200**
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[ordersRes](#schemaordersres)]|false|none|none|
+|» orders|[[orderEntry](#schemaorderentry)]|false|none|none|
+|»» orderId|number|true|none|none|
+|»» pharmacyId|number|true|none|none|
+|»» pharmacyCustomerId|string|false|none|comes from qr code|
+|»» status|number|true|none|none|
+|»» timeStamp|string|true|none|none|
+|»» readByPharmacy|number|true|none|none|
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+This operation does not require authentication
 </aside>
 
-## Get a Specific Kitten
+# Schemas
 
-```ruby
-require 'kittn'
+<h2 id="tocS_ordersRes">ordersRes</h2>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+<a id="schemaordersres"></a>
+<a id="schema_ordersRes"></a>
+<a id="tocSordersres"></a>
+<a id="tocsordersres"></a>
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "orders": [
+    {
+      "orderId": 0,
+      "pharmacyId": 0,
+      "pharmacyCustomerId": "string",
+      "status": 0,
+      "timeStamp": "string",
+      "readByPharmacy": 0
+    }
+  ]
 }
+
 ```
 
-This endpoint retrieves a specific kitten.
+### Properties
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|orders|[[orderEntry](#schemaorderentry)]|false|none|none|
 
-### HTTP Request
+<h2 id="tocS_orderEntry">orderEntry</h2>
 
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+<a id="schemaorderentry"></a>
+<a id="schema_orderEntry"></a>
+<a id="tocSorderentry"></a>
+<a id="tocsorderentry"></a>
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "orderId": 0,
+  "pharmacyId": 0,
+  "pharmacyCustomerId": "string",
+  "status": 0,
+  "timeStamp": "string",
+  "readByPharmacy": 0
 }
+
 ```
 
-This endpoint deletes a specific kitten.
+### Properties
 
-### HTTP Request
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|orderId|number|true|none|none|
+|pharmacyId|number|true|none|none|
+|pharmacyCustomerId|string|false|none|comes from qr code|
+|status|number|true|none|none|
+|timeStamp|string|true|none|none|
+|readByPharmacy|number|true|none|none|
 
-`DELETE http://example.com/kittens/<ID>`
+<h2 id="tocS_ApiResponse">ApiResponse</h2>
 
-### URL Parameters
+<a id="schemaapiresponse"></a>
+<a id="schema_ApiResponse"></a>
+<a id="tocSapiresponse"></a>
+<a id="tocsapiresponse"></a>
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+```json
+{
+  "code": 0,
+  "type": "string",
+  "message": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|code|integer(int32)|false|none|none|
+|type|string|false|none|none|
+|message|string|false|none|none|
 
